@@ -1,4 +1,7 @@
 <script lang="ts">
+	import menuIcon from '../lib/assets/images/menu-icon.png';
+	import logo from '../lib/assets/images/logo.jpg';
+
 	// Simple, reusable header props
 	import { tick, onDestroy } from 'svelte';
 	// guard DOM access during SSR
@@ -38,45 +41,39 @@
 	});
 </script>
 
-<header class="wrapper">
-	<div class="container">
+<header class="  w-full bg-white container">
+	<div class=" max-w-7xl mx-auto flex items-center gap-3 px-4 py-3">
+		<!-- hamburger: visible on small screens -->
 		<button
-			class="hamburger"
+			class="block sm:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100"
 			aria-label="Toggle menu"
 			aria-controls="mobile-menu"
 			aria-expanded={menuOpen}
 			on:click={toggleMenu}
 		>
-			<svg
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				aria-hidden="true"
-			>
-				<path
-					d="M3 6h18M3 12h18M3 18h18"
-					stroke="currentColor"
-					stroke-width="1.6"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			<img src={menuIcon} alt="menu_icon" class="w-6 h-6" />
 		</button>
 
-		<nav class="left" aria-label="Main navigation">
-			<a href="/" class="nav-link">Home</a>
-			<a href="/shop" class="nav-link">Shop</a>
-			<a href="/about" class="nav-link">About</a>
+		<!-- left nav: expanded width on larger screens -->
+		<nav class="hidden sm:flex flex-1 sm:flex-2 gap-4 items-center" aria-label="Main navigation">
+			<a href="/" class="text-gray-800 font-semibold px-3 py-1 rounded-md hover:bg-gray-100">Home</a
+			>
+			<a href="/shop" class="text-gray-800 font-semibold px-3 py-1 rounded-md hover:bg-gray-100"
+				>Collection</a
+			>
+			<a href="/about" class="text-gray-800 font-semibold px-3 py-1 rounded-md hover:bg-gray-100"
+				>New</a
+			>
 		</nav>
 
-		<div class="middle">
-			<a href="/" class="logo">{siteName}</a>
+		<!-- middle logo -->
+		<div class="flex-0 text-center">
+			<a href="/" class="text-lg font-bold text-gray-900 px-3"> <img src={logo} alt="logo" class="w-8 h-8"> </a>
 		</div>
 
-		<div class="right" aria-hidden="false">
-			<button class="icon-btn" aria-label="Favorites">
+		<!-- right icons -->
+		<div class="flex items-center gap-2 justify-end flex-1">
+			<button class="p-2 rounded-md text-gray-700 hover:bg-gray-100" aria-label="Favorites">
 				<svg
 					width="20"
 					height="20"
@@ -94,7 +91,10 @@
 					/>
 				</svg>
 				{#if favCount > 0}
-					<span class="badge">{favCount}</span>
+					<span
+						class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"
+						>{favCount}</span
+					>
 				{/if}
 			</button>
 
@@ -122,7 +122,11 @@
 				{/if}
 			</button>
 
-			<a class="icon-btn" href="/profile" aria-label="Profile">
+			<a
+				class="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+				href="/profile"
+				aria-label="Profile"
+			>
 				<svg
 					width="20"
 					height="20"
@@ -154,191 +158,34 @@
 </header>
 
 {#if menuOpen}
-	<button class="overlay" on:click={closeMenu} aria-label="Close mobile menu" transition:fade
+	<button
+		class="fixed inset-0 bg-black/40 z-40"
+		on:click={closeMenu}
+		aria-label="Close mobile menu"
+		transition:fade
 	></button>
 	<div
 		id="mobile-menu"
-		class="mobile-menu"
+		class="fixed top-0 left-0 h-screen w-[min(320px,80vw)] bg-white z-50 p-5 shadow-lg flex flex-col gap-3"
 		role="dialog"
 		aria-label="Mobile menu"
 		aria-modal="true"
 		transition:fly={{ x: -320, duration: 220 }}
 	>
-		<button class="close-btn" aria-label="Close menu" on:click={closeMenu}> × </button>
-		<nav class="mobile-nav">
-			<a bind:this={firstMobileLink} href="/" class="nav-link" on:click={closeMenu}>Home</a>
-			<a href="/shop" class="nav-link" on:click={closeMenu}>Shop</a>
-			<a href="/about" class="nav-link" on:click={closeMenu}>About</a>
+		<button class="self-end text-2xl leading-none" aria-label="Close menu" on:click={closeMenu}
+			>×</button
+		>
+		<nav class="flex flex-col gap-3 mt-2">
+			<a
+				bind:this={firstMobileLink}
+				href="/"
+				class="text-gray-800 font-semibold"
+				on:click={closeMenu}>Home</a
+			>
+			<a href="/shop" class="text-gray-800 font-semibold" on:click={closeMenu}>Shop</a>
+			<a href="/about" class="text-gray-800 font-semibold" on:click={closeMenu}>About</a>
 		</nav>
 	</div>
 {/if}
 
-<style>
-	.wrapper {
-		border: 2px solid #e6e6e6;
-		padding: 12px 16px;
-		border-radius: 8px;
-		max-width: 1100px;
-		margin: 16px auto;
-		background-color: #fff;
-	}
-
-	.container {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-	}
-
-	/* Left: nav links */
-	.left {
-		display: flex;
-		gap: 12px;
-		align-items: center;
-		flex: 1 1 0;
-	}
-
-	.nav-link {
-		color: #333;
-		text-decoration: none;
-		font-weight: 600;
-		padding: 6px 8px;
-		border-radius: 6px;
-	}
-
-	.nav-link:hover,
-	.nav-link:focus {
-		background: #f3f4f6;
-		outline: none;
-	}
-
-	/* Middle: centered logo */
-	.middle {
-		flex: 0 0 auto;
-		text-align: center;
-	}
-
-	.logo {
-		font-size: 1.15rem;
-		font-weight: 700;
-		color: #111827;
-		text-decoration: none;
-		padding: 6px 12px;
-		border-radius: 6px;
-	}
-
-	/* Right: icons */
-	.right {
-		display: flex;
-		gap: 8px;
-		align-items: center;
-		justify-content: flex-end;
-		flex: 1 1 0;
-	}
-
-	.icon-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 40px;
-		height: 40px;
-		background: transparent;
-		border: none;
-		border-radius: 8px;
-		color: #374151;
-		cursor: pointer;
-		position: relative;
-		text-decoration: none;
-	}
-
-	.icon-btn:hover,
-	.icon-btn:focus {
-		background: #f3f4f6;
-		outline: none;
-	}
-
-	.icon-btn svg {
-		display: block;
-	}
-
-	.badge {
-		position: absolute;
-		top: -6px;
-		right: -6px;
-		background: #ef4444;
-		color: white;
-		font-size: 0.7rem;
-		padding: 2px 6px;
-		border-radius: 999px;
-		line-height: 1;
-	}
-
-	/* Small screens: stack and reduce spacing */
-	@media (max-width: 640px) {
-		.container {
-			gap: 8px;
-		}
-
-		/* show hamburger, hide full nav on small screens */
-		.hamburger {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 40px;
-			height: 40px;
-			background: transparent;
-			border: none;
-			border-radius: 8px;
-			cursor: pointer;
-			color: #374151;
-		}
-
-		.left {
-			display: none; /* collapse nav to keep header compact; mobile menu used instead */
-		}
-
-		.middle {
-			margin: 0 auto;
-		}
-	}
-
-	/* Mobile menu panel and overlay */
-	.overlay {
-		position: fixed;
-		inset: 0;
-		background: rgba(0, 0, 0, 0.4);
-		z-index: 40;
-	}
-
-	.mobile-menu {
-		position: fixed;
-		top: 0;
-		left: 0;
-		height: 100vh;
-		width: min(320px, 80vw);
-		background: white;
-		z-index: 50;
-		padding: 20px;
-		box-shadow: 2px 0 12px rgba(0, 0, 0, 0.08);
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
-
-	.mobile-nav {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		margin-top: 8px;
-	}
-
-	.close-btn {
-		align-self: flex-end;
-		background: transparent;
-		border: none;
-		font-size: 1.5rem;
-		line-height: 1;
-		cursor: pointer;
-	}
-
-	/* end of styles */
-</style>
+<!-- styles moved to Tailwind utility classes -->

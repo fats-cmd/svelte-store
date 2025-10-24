@@ -41,7 +41,7 @@
 	});
 </script>
 
-<header class="sticky top-0 z-50 w-fullshadow-sm">
+<header class="sticky top-0 z-50 w-full bg-white shadow-sm">
 	<div class="max-w-7xl mx-auto flex items-center justify-between gap-3 px-4 py-3">
 		<!-- hamburger: visible on small screens -->
 		<button
@@ -56,95 +56,142 @@
 
 		<!-- left nav: expanded width on larger screens -->
 		<nav class="hidden lg:flex gap-6 items-center" aria-label="Main navigation">
-			<a href="/" class="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2">
+			<a
+				href="/"
+				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+			>
 				Home
 			</a>
-			<a href="/shop" class="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2">
+			<a
+				href="/shop"
+				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+			>
 				Collection
 			</a>
-			<a href="/about" class="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2">
+			<a
+				href="/about"
+				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+			>
 				New
 			</a>
 		</nav>
 
 		<!-- middle logo -->
-		<div class="flex-shrink-0 text-center order-first lg:order-none lg:flex-grow">
+		<div class="shrink-0 text-center lg:grow">
 			<a href="/" class="inline-block" aria-label={siteName}>
 				<img src={logo} alt={siteName} class="h-10 w-auto" />
 			</a>
 		</div>
 
 		<!-- right icons -->
-		<div class="flex items-center gap-4 justify-end flex-shrink-0">
-			<button
-				class="relative p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-				aria-label="Favorites"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-6 h-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					aria-hidden="true"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={1.5}
-						d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-					/>
-				</svg>
-				{#if favCount > 0}
-					<span class="badge" aria-label={`${favCount} items in favorites`}>{favCount}</span>
-				{/if}
-			</button>
+		<div class="flex items-center gap-4 justify-end shrink-0">
+			<!-- favorite icon div container -->
+			<div class="inline-flex gap-2 items-center group">
+				<!-- label wrapper: reserve width on lg, label animates in on group hover -->
+				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
+					<div
+						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
+					>
+						favorites
+					</div>
+				</div>
 
-			<button
-				class="relative p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-				aria-label="Shopping cart"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-6 h-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					aria-hidden="true"
+				<button
+					class="relative p-2 rounded-full text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none hover:scale-105 transition duration-150 flex items-center justify-center"
+					aria-label="Favorites"
 				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={1.5}
-						d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-					/>
-				</svg>
-				{#if cartCount > 0}
-					<span class="badge" aria-label={`${cartCount} items in cart`}>{cartCount}</span>
-				{/if}
-			</button>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="w-6 h-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width={1.5}
+							d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+						/>
+					</svg>
+					{#if favCount > 0}
+						<span
+							class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs font-medium px-1.5 min-w-5 h-5 rounded-full flex items-center justify-center"
+							aria-label={`${favCount} items in favorites`}>{favCount}</span
+						>
+					{/if}
+				</button>
+			</div>
 
-			<a
-				class="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-				href="/profile"
-				aria-label="My profile"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-6 h-6"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-					aria-hidden="true"
+			<div class="inline-flex items-center gap-2 group bg-amber-400 group">
+				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
+					<div
+						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
+					>
+						cart
+					</div>
+				</div>
+
+				<button
+					class="relative p-2 rounded-md text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition duration-150"
+					aria-label="Shopping cart"
 				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={1.5}
-						d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-					/>
-				</svg>
-			</a>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="w-6 h-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width={1.5}
+							d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+						/>
+					</svg>
+					{#if cartCount > 0}
+						<span
+							class="absolute -top-1 -right-1 bg-blue-600 text-white text-xs font-medium px-1.5 min-w-5 h-5 rounded-full flex items-center justify-center"
+							aria-label={`${cartCount} items in cart`}>{cartCount}</span
+						>
+					{/if}
+				</button>
+			</div>
+
+			<div class="inline-flex items-center gap-2 group">
+				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
+					<div
+						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
+					>
+						profile
+					</div>
+				</div>
+
+				<a
+					class="p-2 rounded-md text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition duration-150"
+					href="/profile"
+					aria-label="My profile"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="w-6 h-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width={1.5}
+							d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+						/>
+					</svg>
+				</a>
+			</div>
 		</div>
 	</div>
 </header>

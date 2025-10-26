@@ -34,6 +34,7 @@
 	},
 	"dependencies": {
 		"@tailwindcss/vite": "^4.1.15",
+		"embla-carousel-svelte": "^8.6.0",
 		"tailwindcss": "^4.1.15"
 	}
 }

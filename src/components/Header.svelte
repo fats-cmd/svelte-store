@@ -7,6 +7,7 @@
 	// guard DOM access during SSR
 	const isBrowser = typeof document !== 'undefined' && typeof window !== 'undefined';
 	import { fade, fly } from 'svelte/transition';
+	import SearchBar from './SearchBar.svelte';
 
 	export let cartCount: number = 0;
 	export let favCount: number = 0;
@@ -41,7 +42,7 @@
 	});
 </script>
 
-<header class="sticky top-0 z-50 w-full bg-white shadow-sm">
+<header class="sticky top-0 z-50 w-fullshadow-sm">
 	<div class="max-w-7xl mx-auto flex items-center justify-between gap-3 px-4 py-3">
 		<!-- hamburger: visible on small screens -->
 		<button
@@ -55,22 +56,25 @@
 		</button>
 
 		<!-- left nav: expanded width on larger screens -->
-		<nav class="hidden lg:flex gap-6 items-center" aria-label="Main navigation">
+		<nav
+			class="hidden lg:flex gap-6 items-center font-medium md:font-light"
+			aria-label="Main navigation"
+		>
 			<a
 				href="/"
-				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+				class="  transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
 			>
 				Home
 			</a>
 			<a
 				href="/shop"
-				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+				class="transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
 			>
 				Collection
 			</a>
 			<a
 				href="/about"
-				class="text-gray-700 font-medium transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
+				class="transition-colors py-2 relative pb-2 border-b-2 border-transparent hover:border-black"
 			>
 				New
 			</a>
@@ -85,19 +89,10 @@
 
 		<!-- right icons -->
 		<div class="flex items-center gap-4 justify-end shrink-0">
-			<!-- favorite icon div container -->
-			<div class="inline-flex gap-2 items-center group">
-				<!-- label wrapper: reserve width on lg, label animates in on group hover -->
-				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
-					<div
-						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
-					>
-						favorites
-					</div>
-				</div>
-
+			<!-- Icons with hover labels -->
+			<div class="group relative">
 				<button
-					class="relative p-2 rounded-full text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none hover:scale-105 transition duration-150 flex items-center justify-center"
+					class="relative p-2 rounded-full text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none hover:scale-105 transition-all duration-150 flex items-center justify-center"
 					aria-label="Favorites"
 				>
 					<svg
@@ -122,19 +117,21 @@
 						>
 					{/if}
 				</button>
-			</div>
-
-			<div class="inline-flex items-center gap-2 group bg-amber-400 group">
-				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
+				<!-- Hover label -->
+				<div
+					class="hidden lg:block absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none"
+				>
 					<div
-						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
+						class="bg-black text-white text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap"
 					>
-						cart
+						favorites
 					</div>
 				</div>
+			</div>
 
+			<div class="group relative">
 				<button
-					class="relative p-2 rounded-md text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition duration-150"
+					class="relative p-2 rounded-full text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition-all duration-150"
 					aria-label="Shopping cart"
 				>
 					<svg
@@ -159,19 +156,21 @@
 						>
 					{/if}
 				</button>
-			</div>
-
-			<div class="inline-flex items-center gap-2 group">
-				<div class="hidden lg:flex w-[70px] h-8 items-center justify-center">
+				<!-- Hover label -->
+				<div
+					class="hidden lg:block absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none"
+				>
 					<div
-						class="opacity-0 -translate-x-2 lg:group-hover:opacity-100 lg:group-hover:translate-x-0 transition-all duration-150 w-full h-full rounded-full bg-black text-white flex items-center justify-center text-sm font-medium pointer-events-none"
+						class="bg-black text-white text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap"
 					>
-						profile
+						cart
 					</div>
 				</div>
+			</div>
 
+			<div class="group relative">
 				<a
-					class="p-2 rounded-md text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition duration-150"
+					class="p-2 rounded-full text-gray-700 bg-transparent hover:bg-black hover:text-white lg:group-hover:bg-black lg:group-hover:text-white focus:outline-none transition-all duration-150 inline-flex items-center justify-center"
 					href="/profile"
 					aria-label="My profile"
 				>
@@ -191,8 +190,67 @@
 						/>
 					</svg>
 				</a>
+				<!-- Hover label -->
+				<div
+					class="hidden lg:block absolute left-1/2 top-full -translate-x-1/2 pt-2 opacity-0 group-hover:opacity-100 transition-all duration-150 pointer-events-none"
+				>
+					<div
+						class="bg-black text-white text-sm font-medium px-3 py-1 rounded-full whitespace-nowrap"
+					>
+						profile
+					</div>
+				</div>
 			</div>
 		</div>
+	</div>
+	<!-- bottom navigation -->
+	<div class="md:max-w-6xl max-w-5xl px-4 mx-auto py-6">
+		<ul class="block space-y-2 capitalize list-none font-light">
+			<li>
+				<a
+					href="#"
+					class="group flex items-center gap-2 transition-all duration-300 hover:text-gray-700"
+				>
+					Men
+					<span
+						class="inline-block transform translate-x-0 opacity-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300"
+					>
+						➜
+					</span>
+				</a>
+			</li>
+
+			<li>
+				<a
+					href="#"
+					class="group flex items-center gap-2 transition-all duration-300 hover:text-gray-700"
+				>
+					Women
+					<span
+						class="inline-block transform translate-x-0 opacity-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300"
+					>
+						➜
+					</span>
+				</a>
+			</li>
+
+			<li>
+				<a
+					href="#"
+					class="group flex items-center gap-2 transition-all duration-300 hover:text-gray-700"
+				>
+					Kids
+					<span
+						class="inline-block transform translate-x-0 opacity-0 group-hover:translate-x-1 group-hover:opacity-100 transition-all duration-300"
+					>
+						➜
+					</span>
+				</a>
+			</li>
+
+			<!-- Searchbar component -->
+			<SearchBar />
+		</ul>
 	</div>
 </header>
 

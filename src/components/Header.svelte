@@ -1,6 +1,6 @@
 <script lang="ts">
-	import logo from '../lib/assets/images/logo-removebg-preview.png';
-	import menuIcon from '../lib/assets/images/menu-icon.png';
+	import logo from '/assets/images/logo-removebg-preview.png';
+	import menuIcon from '/assets/images/menu-icon.png';
 
 	// Simple, reusable header props
 	import { tick, onDestroy } from 'svelte';

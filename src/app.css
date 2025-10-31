@@ -1,39 +1,72 @@
 @font-face {
-  font-family: 'BeatriceDeck';
-  src: url('/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Light-BF64829e8e6b5e8.otf') format('opentype');
-  font-weight: 300; /* Light */
-  font-style: normal;
+	font-family: 'BeatriceDeck';
+	src: url('assets/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Light-BF64829e8e6b5e8.otf')
+		format('opentype');
+	font-weight: 300;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: 'BeatriceDeck';
-  src: url('/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Medium-BF64829e8e8d71a.otf') format('opentype');
-  font-weight: 500; /* Medium */
-  font-style: normal;
+	font-family: 'BeatriceDeck';
+	src: url('assets/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Medium-BF64829e8e8d71a.otf')
+		format('opentype');
+	font-weight: 500;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: 'BeatriceDeck';
-  src: url('/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Bold-BF64829e8e9ca08.otf') format('opentype');
-  font-weight: 700; /* Bold */
-  font-style: normal;
-}
-
-:root {
-  --font-sans: 'BeatriceDeck', sans-serif;
+	font-family: 'BeatriceDeck';
+	src: url('assets/fonts/beatrice-font-family-1761295762-0/BeatriceDeckTRIAL-Bold-BF64829e8e9ca08.otf')
+		format('opentype');
+	font-weight: 700;
+	font-style: normal;
 }
 
 @import 'tailwindcss';
 
 @layer base {
-  body {
-    font-family: var(--font-sans);
-    background-color: #e7e7e7;
-  }
+	:root {
+		--font-sans: 'BeatriceDeck', sans-serif;
+	}
+
+	body {
+		font-family: var(--font-sans);
+		position: relative;
+		background-image: url('/assets/images/noise.webp');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		background-attachment: fixed;
+		min-height: 100vh;
+		color: #111827;
+	}
+
+	/* White brightening overlay */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		background-color: rgba(255, 255, 255, 0.7);
+		z-index: 0;
+	}
+
+	/* Subtle noise overlay */
+	body::after {
+		content: '';
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		background-image: url('/assets/images/noise.webp');
+		background-repeat: repeat;
+		background-size: 30%;
+		opacity: 0.06;
+		z-index: 0;
+	}
+
+	/* Ensure page content stacks above overlays */
+	body > * {
+		position: relative;
+		z-index: 1;
+	}
 }
-
-
-/* body {
-	/* background-color: #d7d7d7; */
-	/* background-color: #e7e7e7; */
-/* } */ 
